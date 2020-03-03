@@ -8,34 +8,18 @@ const up = (queryInterface, Sequelize) => queryInterface.createTable('Users', {
   name: {
     type: Sequelize.STRING
   },
-  gender: {
-    type: Sequelize.STRING
-  },
   email: {
     type: Sequelize.STRING
   },
-  username: {
+  picture: {
     type: Sequelize.STRING,
     unique: true
   },
-  password: {
+  userID: {
     type: Sequelize.STRING
   },
-  role: {
-    type: Sequelize.STRING
-  },
-  social_id: {
-    type: Sequelize.STRING,
-    unique: true
-  },
-  provider: {
-    type: Sequelize.STRING
-  },
-  isVerified: {
+  isLoggedIn: {
     type: Sequelize.BOOLEAN
-  },
-  profilePhoto: {
-    type: Sequelize.STRING
   },
   createdAt: {
     allowNull: false,
