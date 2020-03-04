@@ -1,22 +1,22 @@
-import { LOGIN_USER } from './userTypes'
+import { LOGIN_USER } from "./userTypes";
 
-const inititalState = {
-    user: {
-      
-    }
-}
+const initialStatus = {
+  loggedInUsers: []
+};
 
-const reducer = (state = inititalState, action) =>
-{
-  switch (action.type) {
-    case LOGIN_USER:
+const reducer = (state = initialStatus, action) => {
+  if(action.type === LOGIN_USER){
+      const incomingUserData = action.newUser;
+      const updatedLoggedInUsers = [
+          ...state.loggedInUsers,
+          incomingUserData
+      ];
       return {
-        ...state,
-        user: action.payload
+          ...state,
+          loggedInUsers: updatedLoggedInUsers
       }
-    
-    default: return state
   }
-}
+  return state;
+};
 
-export default reducer
+export default reducer;

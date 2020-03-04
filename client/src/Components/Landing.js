@@ -1,8 +1,16 @@
 import React, { Component } from "react";
-import "../App.css";
+import { connect } from 'react-redux';
+import { fetchQuestionRequest } from '../redux';
+import QuestionList from '../Components/Questions/qestionsList';
 
 class Landing extends Component {
+  componentDidMount(){
+    this.props.getQuestions();
+  }
+  
   render() {
+    const {questions} = this.props.question;
+    
     return (
       <div className="wrapper">
         <div>
@@ -34,52 +42,9 @@ class Landing extends Component {
 		<b><p>Guevara</p></b>
 		<p>manziguevara@gmail.com</p>
 		<hr></hr>
-		<h2>Game: Sports</h2>
+		<h2>Game</h2>
 		<div>
-			<form>
- <p> <b>1. </b>Who is the best football player of all time?</p>
-  <input type="radio" id="ronaldo" name="player" required></input>
-  <label for="ronaldo">Ronaldo</label><br></br>
-  <input type="radio" id="messi" name="player" required></input>
-  <label for="messi">Messi</label><br></br>
-  <input type="radio" id="ronaldinho" name="player" required></input>
-  <label for="ronaldinho">Ronaldinho</label>
-
-  <br></br>
-   <p> <b>2. </b>Who is the all time top scorer?</p>
- <input type="radio" id="ronaldo" name="scorer" required></input>
-  <label for="ronaldo">Ronaldo</label><br></br>
-  <input type="radio" id="messi" name="scorer" required></input>
-  <label for="messi">Messi</label><br></br>
-  <input type="radio" id="ronaldinho" name="scorer" required></input>
-  <label for="ronaldinho">Ronaldinho</label>
-  <br></br>
-   <p> <b>3. </b>Which club signed the most expensive players this season?</p>
- <input type="radio" id="real" name="club" required></input>
-  <label for="real">Real Madrid</label><br></br>
-  <input type="radio" id="barca" name="club" required></input>
-  <label for="barca">Barcelona</label><br></br>
-  <input type="radio" id="mancity" name="club" required></input>
-  <label for="mancity">Man City</label>
-  <br></br>  
-   <p> <b>4. </b>Which team won the UCL final in 2017</p>
-  <input type="radio" id="real" name="team" required></input>
-  <label for="real">Real Madrid</label><br></br>
-  <input type="radio" id="barca" name="team" required></input>
-  <label for="barca">Barcelona</label><br></br>
-  <input type="radio" id="mancity" name="team" required></input>
-  <label for="mancity">Man City</label>
-  <br></br>  
-   <p> <b>5. </b>Who is the most paid Athlete in the world?</p>
- <input type="radio" id="ronaldo" name="athlete" required></input>
-  <label for="ronaldo">Ronaldo</label><br></br>
-  <input type="radio" id="messi" name="athlete" required></input>
-  <label for="messi">Messi</label><br></br>
-  <input type="radio" id="lebron" name="athlete" required></input>
-  <label for="lebron">Lebron James</label>
-  <input type="submit" value="Submit"></input>
-  
-</form>
+      <QuestionList questions={questions} />
 		</div>
 	</div>
 	</div>
@@ -88,4 +53,14 @@ class Landing extends Component {
   }
 }
 
-export default Landing;
+const mapActionToProps = dispatch => {
+  return {
+    getQuestions: () => dispatch(fetchQuestionRequest())
+  }
+}
+
+const mapStateToProps = (state) => {
+  return { question: state.question }
+};
+
+export default connect(mapStateToProps, mapActionToProps)(Landing);
