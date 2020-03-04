@@ -1,18 +1,18 @@
-import { FETCH_USERS_REQUEST } from './userTypes'
+import { LOGIN_USER } from './userTypes'
 
 const inititalState = {
-    laoding: false,
-    user: {},
-    error: ''
+    user: {
+      
+    }
 }
 
 const reducer = (state = inititalState, action) =>
 {
-  switch ( action.type ) {
-    case FETCH_USERS_REQUEST:
+  switch (action.type) {
+    case LOGIN_USER:
       return {
         ...state,
-        loading: true
+        user: action.payload
       }
     
     default: return state

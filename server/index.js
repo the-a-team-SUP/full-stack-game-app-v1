@@ -2,13 +2,17 @@ import dotenv from 'dotenv';
 import express from 'express';
 import serverSocket from 'socket.io';
 import GameHelper from './helpers/gameHelper';
+import allRoutes from './routes';
 
 dotenv.config();
 
 const app = express();
+const basePath = '/api';
+
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
+app.use(basePath, allRoutes);
 app.use((req, res) => {
   res.status(404).send({
     status: 404,
