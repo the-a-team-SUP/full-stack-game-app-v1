@@ -16,13 +16,7 @@ app.use((req, res) => {
   });
 });
 
-// const game = async() => {
-//   const data = await GameHelper.fetchGame('id', 1);
-//   console.log(JSON.parse(data.users[4]).userId);
-// }
-
 const socketToListen = app.listen(process.env.PORT, () => {
-  // game();
   console.log(`server is running on port ${process.env.PORT}`);
 });
 
