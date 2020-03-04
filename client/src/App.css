@@ -7,6 +7,58 @@ body{
 	background-color: lightgrey;
 	font-family: 'Montserrat';
 }
+
+.logo {
+	height: 200px;
+	width: 200px;
+}
+
+.highlight {
+	font-weight:bold;
+	margin-top: 0px;
+	color: gray;
+}
+
+.main{
+	font-family:georgia,garamond,serif;
+	font-style:italic;
+	min-height: 100%;
+	font-size:15px;
+	margin: auto;
+	width: 95%;
+}
+
+.button{
+
+	height: 50px;
+	font-size:15px;
+	color: #ffffff;
+	margin-top: 50px;
+	padding-left: 25px;
+	padding-right: 25px;
+	background: #005699;
+	border-radius: 10px 10px 10px 10px;
+	font-family:georgia,garamond,serif;
+}
+
+.button:hover{
+	height: 52px;
+	color: #ffffff;
+	padding-left: 27px;
+	padding-right: 27px;
+	background: #221b86;
+	border-radius: 10px 10px 10px 10px;
+}
+
+#showcase{
+	margin: auto;
+	color: gray; 
+	width: 70%;
+	margin-top: 70px;
+	text-align: center;
+}
+
+
 .wrapper {
 	background-color: white;
 	padding: 1em;
