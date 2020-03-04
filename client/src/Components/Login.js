@@ -36,10 +36,7 @@ class FacebookAuth extends Component {
         let facebookData;
         if(this.props.loggedInUsers[0] && this.props.loggedInUsers[0].authenticated){
             facebookData = (
-                <div>
-                    <p>Hello { `${this.props.loggedInUsers[0].firstName}` }</p>
-                    <p><img alt='profilepic' src={this.props.loggedInUsers[0].picture}></img></p>
-                </div>
+                this.props.history.push('/landing')
             );
         } else {
             facebookData = (
