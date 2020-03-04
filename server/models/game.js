@@ -1,7 +1,11 @@
 const gameDefinition = (sequelize, DataTypes) => {
   const game = sequelize.define('Game', {
-    name: DataTypes.STRING,
-    description: DataTypes.STRING
+  users: {
+    type: DataTypes.ARRAY(DataTypes.TEXT)
+  },
+  questionIds: {
+    type: DataTypes.ARRAY(DataTypes.INTEGER)
+  }
   }, {});
 
   return game;

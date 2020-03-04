@@ -1,6 +1,7 @@
 import dotenv from 'dotenv';
 import express from 'express';
 import serverSocket from 'socket.io';
+import GameHelper from './helpers/gameHelper';
 
 dotenv.config();
 
@@ -8,24 +9,24 @@ const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// app.use(express.static(`${__dirname}/`));
-// app.use(express.static(path.join(__dirname, '../UI/html')));
-// app.use(basePath, allRoutes);
-// app.use(`${basePath}/documentation`, swaggerUi.serve, swaggerUi.setup(apiDocumentation));
-
-
-app.get('**', (req, res) => {
+app.use((req, res) => {
   res.status(404).send({
     status: 404,
     error: `Not Found`
   });
 });
 
-const socketListen = app.listen(process.env.PORT, () => {
+// const game = async() => {
+//   const data = await GameHelper.fetchGame('id', 1);
+//   console.log(JSON.parse(data.users[4]).userId);
+// }
+
+const socketToListen = app.listen(process.env.PORT, () => {
+  // game();
   console.log(`server is running on port ${process.env.PORT}`);
 });
 
-const io = serverSocket(socketListen);
+const io = serverSocket(socketToListen);
 
 io.on('connection', (socket) => {
   console.log('socket successfully connected');
@@ -34,16 +35,16 @@ io.on('connection', (socket) => {
     socket.join(data);
   });
 
-  socket.on('client-chat-message', async (messageData) => {
-    const clientData = {
-      userId: messageData.userId,
-      message: messageData.message,
-      createdAt: messageData.createdAt,
-      updatedAt: messageData.createdAt
+  socket.on('user-start-game', async (data) => {
+    const userData = {
+      userId: data.userId,
+      email: data.email,
+      createdAt: data.createdAt,
+      updatedAt: data.createdAt
     };
 
-    const savedChat = await chatHelper.saveChat(clientData);
-    if (savedChat) socket.broadcast.emit('server-chat-message', messageData);
+    const user = await chatHelper.saveChat(userData);
+    if (user) socket.broadcast.emit('server-start-game', data);
   });
 });
 
