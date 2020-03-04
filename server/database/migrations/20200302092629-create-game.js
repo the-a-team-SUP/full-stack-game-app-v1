@@ -5,11 +5,11 @@ const up = (queryInterface, Sequelize) => queryInterface.createTable('Games', {
     primaryKey: true,
     type: Sequelize.INTEGER
   },
-  name: {
-    type: Sequelize.STRING
+  users: {
+    type: Sequelize.ARRAY(Sequelize.TEXT)
   },
-  description: {
-    type: Sequelize.STRING
+  questionIds: {
+    type: Sequelize.ARRAY(Sequelize.INTEGER)
   },
   createdAt: {
     allowNull: false,
