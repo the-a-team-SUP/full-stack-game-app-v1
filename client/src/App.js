@@ -1,10 +1,20 @@
 import React from 'react';
-import FacebookAuth from './components/FacebookAuth';
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import './App.css';
+import Login from './Components/Login';
+import Landing from "./Components/Landing";
+import Score from "./Components/Score";
 
 function App() {
   return (
     <div className="App">
-      <FacebookAuth />
+      <Router>
+        <Switch>
+          <Route path="/" exact component={Login} />
+          <Route path="/landing" exact component={Landing} />
+          <Route path="/scores" exact component={Score} />
+        </Switch>
+      </Router>
     </div>
   );
 }
