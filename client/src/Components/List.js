@@ -1,4 +1,4 @@
-import React, { Component } from "src/Components/node_modules/react";
+import React, { Component } from "react";
 import openSocket from 'socket.io-client';
 import "../styles/List.scss";
 
