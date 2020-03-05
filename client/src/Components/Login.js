@@ -68,7 +68,7 @@ class FacebookAuth extends Component {
 };
 const mapStateToProps = (state) => {
     return {
-        loggedInUsers: state.loggedInUsers
+        loggedInUsers: state.user.loggedInUsers
     };
 };
 const mapDispatchToProps = (dispatch) => {

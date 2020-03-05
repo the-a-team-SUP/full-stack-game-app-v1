@@ -16,6 +16,17 @@ class GameHelper {
     const savedGame = await Game.findOne({ where: { [attr]: value } });
     return savedGame;
   }
+
+  /**
+   * Update a game.
+   * @param {string} id The id of a game.
+   * @param {string} gameData The game data.
+   * @returns {object} The user's data about update password.
+   */
+  static async updateGame(id, gameData) {
+    const updatedGame = await Game.update(gameData, { where: { id } });
+    return updatedGame;
+  }
 }
 
 export default GameHelper;
