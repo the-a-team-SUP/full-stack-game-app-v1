@@ -1,4 +1,4 @@
-import React, { Component } from "src/Components/node_modules/react";
+import React, { Component } from "react";
 import "../App.css";
 
 class Score extends Component {

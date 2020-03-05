@@ -1,6 +1,6 @@
-import React, { Component } from 'src/Components/node_modules/react';
-import FacebookLogin from 'src/Components/node_modules/react-facebook-login';
-import { connect } from 'src/Components/node_modules/react-redux';
+import React, { Component } from 'react';
+import FacebookLogin from 'react-facebook-login';
+import { connect } from 'react-redux';
 import { postUser } from '../redux';
 
 class MyFaceComponent extends Component {
