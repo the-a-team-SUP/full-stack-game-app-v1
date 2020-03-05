@@ -1,1 +1,1 @@
-export const FETCH_USERS_REQUEST = 'FETCH_USERS_REQUEST'
+export const LOGIN_USER = 'LOGIN_USER'

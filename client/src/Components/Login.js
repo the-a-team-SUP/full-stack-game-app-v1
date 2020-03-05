@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component } from 'src/Components/node_modules/react';
 import logo from './Asserts/Images/gamelogo.png';
-import FacebookLogin from 'react-facebook-login';
-import { connect } from 'react-redux';
-import axios from 'axios';
+import FacebookLogin from 'src/Components/node_modules/react-facebook-login';
+import { connect } from 'src/Components/node_modules/react-redux';
+import axios from 'src/Components/node_modules/axios';
 
 class FacebookAuth extends Component {
     loginBtnClicked = () => {
@@ -20,7 +20,6 @@ class FacebookAuth extends Component {
                 userID
             });
             const firstName = name.split(' ')[0];
-
             this.props.addUserToStore({
                 name,
                 email,
@@ -47,7 +46,7 @@ class FacebookAuth extends Component {
                         <h2 className="highlight">full-stack-game-app-v1</h2>
                         <p>
                             full-stack-game-app-v1 is a coolest game ever !! This is a coolest Multiple choice game or objective response is a form of an objective assessment in which respondents are asked to select only correct answers from the choices offered as a list. The multiple choice format is most frequently used in educational testing, in market research, and in elections, when a person chooses between multiple candidates or parties.
-						</p>
+						            </p>
                         <FacebookLogin className="button"
                         appId='853316458415497'
                         autoLoad={true}
@@ -68,13 +67,11 @@ class FacebookAuth extends Component {
         );
     }
 };
-
 const mapStateToProps = (state) => {
     return {
         loggedInUsers: state.loggedInUsers
     };
 };
-
 const mapDispatchToProps = (dispatch) => {
     return {
         addUserToStore: (user) => { dispatch ({ type: 'LOGIN_USER', newUser: user }) }
