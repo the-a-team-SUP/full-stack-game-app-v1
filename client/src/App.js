@@ -1,9 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import './App.css';
-import Login from './Components/Login';
-import Landing from "./Components/Landing";
-import Score from "./Components/Score";
+import Login from './components/Login';
+import Landing from "./components/Landing";
+import Score from "./components/Score";
 
 function App() {
   return (

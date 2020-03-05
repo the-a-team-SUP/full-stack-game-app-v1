@@ -1,2 +1,2 @@
-export * from './user/userTypes'
-export * from './question/questionTypes'
+export * from './user/userActions'
+export * from './question/questionActions'
