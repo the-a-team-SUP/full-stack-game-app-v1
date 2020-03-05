@@ -15,6 +15,16 @@ const reducer = (state = initialStatus, action) => {
           ...state,
           loggedInUsers: updatedLoggedInUsers
       }
+    } else if (action.type === "ADD_LOGGEDIN_USER_FROM_SOCKET") {
+      return {
+        ...state,
+        loggedInUsers: [...state.loggedInUsers, action.newUser]
+      };
+    } else if (action.type === "ADD_FETCHED_USERS") {
+      return {
+        ...state,
+        loggedInUsers: [...state.loggedInUsers, ...action.users]
+      };
   }
   return state;
 };
