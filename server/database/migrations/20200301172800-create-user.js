@@ -16,7 +16,7 @@ const up = (queryInterface, Sequelize) => queryInterface.createTable('Users', {
     unique: true
   },
   userID: {
-    type: Sequelize.STRING
+    type: Sequelize.BIGINT
   },
   isLoggedIn: {
     type: Sequelize.BOOLEAN

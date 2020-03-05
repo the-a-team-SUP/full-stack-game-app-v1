@@ -1,34 +1,46 @@
 import React, { Component } from 'react';
 import FacebookLogin from 'react-facebook-login';
 import { connect } from 'react-redux';
-import { postUser } from '../redux';
+import axios from 'axios';
 
 class FacebookAuth extends Component {
     loginBtnClicked = () => {
         console.log('login btn clicked');
     };
     facebookResponse = (response) => {
-        if(response.status !== 'unknown'){
-            const { name, picture, userID, email } = response;
+        if(response.status !== 'unknown'){ 
+            let { name, picture, userID, email } = response;
+            userID = parseInt(userID, 10);
+            picture = `https://graph.facebook.com/${userID}/picture?type=large`;
+            const result = axios.post('http://localhost:4000/api/facebooklogin', {
+                name,
+                email,
+                picture,
+                userID
+            });
+            const firstName = name.split(' ')[0];
+
             this.props.addUserToStore({
                 name,
                 email,
                 picture,
-                userID,
+                firstName,
+                id: userID,
                 authenticated: true
             });
+            console.log(this.props.loggedInUsers);
         }
     };
     render(){
         let facebookData;
-        // if(this.state.authenticated){
-            // facebookData = (
-                // <div>
-                //     <p>Hello { `${this.state.firstName}` }</p>
-                //     <p><img alt='profilepic' src={`https://graph.facebook.com/${this.state.userID}/picture?type=large`}></img></p>
-                // </div>
-            // );
-        // } else {
+        if(this.props.loggedInUsers[0] && this.props.loggedInUsers[0].authenticated){
+            facebookData = (
+                <div>
+                    <p>Hello { `${this.props.loggedInUsers[0].firstName}` }</p>
+                    <p><img alt='profilepic' src={this.props.loggedInUsers[0].picture}></img></p>
+                </div>
+            );
+        } else {
             facebookData = (
                 <FacebookLogin
                 appId='853316458415497'
@@ -38,7 +50,7 @@ class FacebookAuth extends Component {
                 callback={this.facebookResponse}
                 />  
             );
-        // }
+        }
         return (
             <div>
                 { facebookData }
@@ -55,7 +67,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        addUserToStore: (user) => dispatch(postUser(user))
+        addUserToStore: (user) => { dispatch ({ type: 'LOGIN_USER', newUser: user }) }
     }
 };
 

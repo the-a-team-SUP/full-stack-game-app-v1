@@ -6,12 +6,14 @@ import path from 'path';
 import GameHelper from './helpers/gameHelper';
 import GameCollection from './helpers/GameCollection';
 import allRoutes from './routes';
+import cors from 'cors';
 
 dotenv.config();
 
 const app = express();
 const basePath = '/api';
 
+app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use('/UI', express.static(path.join(__dirname, '../UI')));
