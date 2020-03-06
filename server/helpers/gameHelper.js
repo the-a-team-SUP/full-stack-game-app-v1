@@ -18,6 +18,29 @@ class GameHelper {
   }
 
   /**
+   * data.
+   * @param {string} attr The attribute.
+   * @param {string} value The value.
+   * @returns {string} The data.
+  */
+  static async saveGame(game) {
+    const savedGame = await Game.create(
+      {
+        users: game.users,
+        questionIds: game.questionIds,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        fields: [
+          'users', 'questionIds', 'createdAt', 'updatedAt'
+        ]
+      }
+    );
+    return savedGame;
+  }
+
+  /**
    * Update a game.
    * @param {string} id The id of a game.
    * @param {string} gameData The game data.

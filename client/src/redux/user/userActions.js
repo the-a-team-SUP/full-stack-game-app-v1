@@ -12,7 +12,7 @@ export const loginUser = (user) =>
 
 export const postUser = (user) => {
   const { name, email, picture, userID } = user;
-  return (dispatch) => axios.post('http://localhost:3000/api/facebooklogin', {
+  return (dispatch) => axios.post('http://localhost:4000/api/facebooklogin', {
       name,
       email,
       picture,

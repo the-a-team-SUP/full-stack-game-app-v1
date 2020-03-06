@@ -5,6 +5,8 @@ import fs from 'fs';
 import path from 'path';
 import cors from 'cors';
 import GameCollection from './helpers/GameCollection';
+import GameHelper from './helpers/gameHelper';
+import QuestionHelper from './helpers/QuestionHelper';
 import allRoutes from './routes';
 
 dotenv.config();
@@ -92,39 +94,46 @@ io.on('connection', (socket) => {
   };
 
   // when the client  requests to make a Game
-  socket.on('makeGame', (data) => {
+  socket.on('makeGame', async (data) => {
     console.log(JSON.stringify(GameCollection));
 
     let noGamesFound = true;
 
     // eslint-disable-next-line array-callback-return
     GameCollection.gameList.map((game, index) => {
-      if (game.playerOne === data.name) {
+      if (game.users[0].userID === data.id) {
         noGamesFound = false;
         console.log("This User already has a Game!");
 
         socket.emit('alreadyJoined', {
-          gameId: GameCollection.gameList[index].id
+          gameId: GameCollection.gameList[index]
         });
       }
     });
 
     if (noGamesFound) {
       const gameObject = {};
+      const Qs = await QuestionHelper.fetchQuestions();
+
       gameObject.id = (Math.random() + 1).toString(36).slice(2, 18);
-      gameObject.playerOne = data.name;
-      gameObject.open = true;
+      gameObject.users = [{userId: data.userID, score: 0}];
+      gameObject.questionIds = Qs.map(q => q.id);
+      gameObject.open = false;
+
+      console.log(gameObject);
 
       const game = GameCollection;
+
       console.log(`Game Created by ${data.name} w/ ${gameObject.id}`);
       game.totalGameCount += 1;
       game.gameList.push(gameObject);
 
-      io.emit('gameCreated', {
-        username: data.name,
-        gameId: gameObject.id
-      });
+      const saved = await GameHelper.saveGame({users: gameObject.users, questionIds: gameObject.questionIds});
+      gameObject.savedGame = saved;
+
+      socket.broadcast.emit('gameCreated', gameObject);
     }
+    console.log(JSON.stringify(GameCollection));
   });
 
   socket.on('joinGame', (data) => {
