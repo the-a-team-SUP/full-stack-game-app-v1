@@ -1,4 +1,4 @@
-import { FETCH_QUESTIONS_REQUEST, FETCH_QUESTIONS_LOADING, FETCH_QUESTIONS_ERROR } from "./questionTypes";
+import { FETCH_QUESTIONS_REQUEST, RETRIEVE_QUESTIONS_REQUEST, FETCH_QUESTIONS_LOADING, FETCH_QUESTIONS_ERROR } from "./questionTypes";
 
 const inititalState = {
   loading: false,
@@ -12,6 +12,12 @@ const reducer = (state = inititalState, action) => {
       return {
         ...state,
         questions: action.payload
+      };
+
+    case RETRIEVE_QUESTIONS_REQUEST:
+      return {
+        ...state,
+        questions: [ ...action.payload ]
       };
     
     case FETCH_QUESTIONS_LOADING:

@@ -1,6 +1,6 @@
 import SocketClient from "socket.io-client";
 
-const socket = SocketClient("http://localhost:4000");
+const socket = SocketClient("https://express-react-redux-game.herokuapp.com");
 const createMySocketMiddleware = () => {
   return ({ dispatch }) => {
     socket.on("logged_in_user", (newUser) => {

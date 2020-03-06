@@ -14,7 +14,6 @@ class QuestionController {
    */
   static async retrieveQuestions(req, res) {
     const questions = await QuestionHelper.fetchQuestions();
-    console.log(questions);
     if (questions.length < 0) {
       return res.status(404).json({
         status: res.statusCode,
