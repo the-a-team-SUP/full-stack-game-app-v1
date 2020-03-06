@@ -44,7 +44,13 @@ io.on('connection', (socket) => {
     socket.join(data);
   });
 
+  socket.on("new_user_logged_in", (userData) => {
+    console.log(userData);
+    
+    socket.broadcast.emit("logged_in_user", userData);
+  });
 
+  
   const buildGame = (data) => {
     const gameObject = {};
     gameObject.id = (Math.random() + 1).toString(36).slice(2, 18);

@@ -19,6 +19,7 @@ class FacebookAuth extends Component {
                 userID
             });
             const firstName = name.split(' ')[0];
+
             this.props.addUserToStore({
                 name,
                 email,
@@ -34,29 +35,20 @@ class FacebookAuth extends Component {
         let facebookData;
         if(this.props.loggedInUsers[0] && this.props.loggedInUsers[0].authenticated){
             facebookData = (
-                this.props.history.push('/landing')
+                <div>
+                    <p>Hello { `${this.props.loggedInUsers[0].firstName}` }</p>
+                    <p><img alt='profilepic' src={this.props.loggedInUsers[0].picture}></img></p>
+                </div>
             );
         } else {
             facebookData = (
-                <div>
-                <section id="showcase">
-                      <div className="main">
-                        <img alt="Facebook Logo" src={`${process.env.PUBLIC_URL}Asserts/Images/gamelogo.png`} className="logo" />
-                        <h2 className="highlight">full-stack-game-app-v1</h2>
-                        <p>
-                            full-stack-game-app-v1 is a coolest game ever !! This is a coolest Multiple choice game or objective response is a form of an objective assessment in which respondents are asked to select only correct answers from the choices offered as a list. The multiple choice format is most frequently used in educational testing, in market research, and in elections, when a person chooses between multiple candidates or parties.
-						            </p>
-                        <FacebookLogin className="button"
-                          appId='853316458415497'
-                          autoLoad={true}
-                          fields='name, picture, email'
-                          onClick={this.loginBtnClicked}
-                          callback={this.facebookResponse}
-                        />
-                    </div>
-                </section>
-
-            </div>  
+                <FacebookLogin
+                appId='853316458415497'
+                autoLoad={true}
+                fields='name, picture, email'
+                onClick={this.loginBtnClicked}
+                callback={this.facebookResponse}
+                />  
             );
         }
         return (
@@ -66,11 +58,13 @@ class FacebookAuth extends Component {
         );
     }
 };
+
 const mapStateToProps = (state) => {
     return {
-        loggedInUsers: state.user.loggedInUsers
+        loggedInUsers: state.loggedInUsers
     };
 };
+
 const mapDispatchToProps = (dispatch) => {
     return {
         addUserToStore: (user) => { dispatch ({ type: 'LOGIN_USER', newUser: user }) }

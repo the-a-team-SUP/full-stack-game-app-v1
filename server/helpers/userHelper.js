@@ -23,7 +23,8 @@ class UserHelper {
       {
         fields: [
           "name",
-          "picture",,
+          "picture",
+          ,
           "email",
           "userID",
           "isLoggedIn",
@@ -35,10 +36,10 @@ class UserHelper {
     return acceptedUser;
   }
 
-   /**
-     * Finds the user's email if he/she exists.
-     * @param {string} id users table field.
-     * @returns {object} The users's data.
+  /**
+   * Finds the user's email if he/she exists.
+   * @param {string} id users table field.
+   * @returns {object} The users's data.
    */
   static async userExists(id) {
     const user = await User.findOne({ where: { userID: id } });
@@ -46,16 +47,23 @@ class UserHelper {
   }
 
   /**
-     * updates the isLoggedIn field on a user's record.
-     * @param {string} id users id table field.
-     * @param {boolean} state is loggedin field update.
-     * @returns {object} The users's data.
+   * updates the isLoggedIn field on a user's record.
+   * @param {string} id users id table field.
+   * @param {boolean} state is loggedin field update.
+   * @returns {object} The users's data.
    */
   static async login(id, state) {
-    const user = await User.update({ isLoggedIn: state }, { where: { userID: id } });
+    const user = await User.update(
+      { isLoggedIn: state },
+      { where: { userID: id } }
+    );
     return user;
   }
 
+  static async findLoggedInUsers(state) {
+    const users = await User.findAll({ where: { isLoggedIn: state } });
+    return users;
+  }
 }
 
 export default UserHelper;
