@@ -34,7 +34,7 @@ class FacebookAuth extends Component {
         let facebookData;
         if(this.props.loggedInUsers[0] && this.props.loggedInUsers[0].authenticated){
             facebookData = (
-                this.props.history.push('/landing')
+                this.props.history.push('/list')
             );
         } else {
             facebookData = (
