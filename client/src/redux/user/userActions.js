@@ -1,6 +1,5 @@
+import { LOGIN_USER, LOGOUT_USER } from './userTypes'
 import axios from 'axios'
-
-import { LOGIN_USER } from './userTypes'
 
 export const loginUser = (user) =>
 {
@@ -9,6 +8,14 @@ export const loginUser = (user) =>
     payload: user
   }
 }
+
+export const logoutUser = (userID) => {
+  return { 
+      type: LOGOUT_USER,
+      user: userID
+
+  };
+};
 
 export const postUser = (user) => {
   const { name, email, picture, userID } = user;
