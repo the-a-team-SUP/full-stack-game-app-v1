@@ -15,8 +15,8 @@ class Logout extends Component {
             <div>
                 <button
                     onClick={(() => {
-                        if(this.props.loggedInUsers.length === 0) { this.props.history.push("/") } else {
-                        this.props.logoutThisUser(this.props.loggedInUsers[0].userID); 
+                        if (this.props.loggedInUsers.length === 0) { this.props.history.push("/") } else {
+                            this.props.logoutThisUser(this.props.loggedInUsers[0].userID);
                         }
                     })}
                 >

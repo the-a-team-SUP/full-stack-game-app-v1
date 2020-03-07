@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import openSocket from 'socket.io-client';
 import { createGameHandler, updateGameList } from '../redux';
 import { connect } from "react-redux";
+import Logout from './Logout';
 import "../styles/List.scss";
 
 class List extends Component {
@@ -31,9 +32,10 @@ class List extends Component {
     const { game, gameList, users } = this.props;
     const games = gameList.map((g, index) => <li key={index}><p>GameId : {g.id} with {g.users.length} participants <button>Join Game</button></p></li>);
     return (
-      
+
       <div className="wrapper">
         <div className="center-div">
+          <Logout history={this.props.history} />
           <div className="games">
             <h2>All available games</h2>
             <ul>
