@@ -12,7 +12,7 @@ const Product = ({questionId, choises}) => {
         return(
             <div key={index}>
                 <input type="radio" name={questionId} value={option.isCorrect} required />
-                <label for={questionId}>{option.answer}</label>
+                <label htmlFor={questionId}>{option.answer}</label>
             </div>
         )
     })
