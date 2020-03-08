@@ -1,5 +1,6 @@
 import { CREATE_GAME } from "./gameTypes";
 import { UPDATE_GAMELIST } from './gameTypes';
+import { JOIN_GAME } from './gameTypes';
 
 const inititalState = {
   loading: false,
@@ -40,13 +41,20 @@ const reducer = (state = inititalState, action) => {
       return {
         ...state,
         game: action.payload,
-        isGameOpen: true
+        isGameOpen: "pending"
       };
 
     case UPDATE_GAMELIST:
       return {
         ...state,
         gameList: [...state.gameList, action.payload]
+      };
+
+
+    case JOIN_GAME:
+      return {
+        ...state,
+        game: action.payload
       };
 
     default:

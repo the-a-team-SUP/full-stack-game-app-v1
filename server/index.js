@@ -52,50 +52,10 @@ io.on('connection', (socket) => {
     socket.broadcast.emit("logged_in_user", userData);
   });
 
-  
-  const buildGame = (data) => {
-    const gameObject = {};
-    gameObject.id = (Math.random() + 1).toString(36).slice(2, 18);
-    gameObject.playerOne = data.name;
-    gameObject.playerTwo = null;
-    gameObject.open = true;
-
-    const game = GameCollection;
-    console.log(`Game Created by ${data.name} w/ ${gameObject.id}`);
-    game.totalGameCount += 1;
-    game.gameList.push(gameObject);
-
-    io.emit('gameCreated', {
-      username: data.name,
-      gameId: gameObject.id
-    });
-  };
-
-  let loopLimit = 0;
-
-  const gameSeeker = (data) => {
-    loopLimit += 1;
-    if ((GameCollection.totalGameCount === 0) || (loopLimit >= 20)) {
-      buildGame(data);
-      loopLimit = 0;
-    } else {
-      const rndPick = Math.floor(Math.random() * GameCollection.totalGameCount);
-      if (GameCollection.gameList[rndPick].playerTwo == null) {
-        GameCollection.gameList[rndPick].playerTwo = data.name;
-        io.emit('joinSuccess', {
-          gameId: GameCollection.gameList[rndPick].id
-        });
-
-        console.log(`${data.name} has been added to: ${GameCollection.gameList[rndPick].id}`);
-      } else {
-        gameSeeker(data);
-      }
-    }
-  };
-
   // when the client  requests to make a Game
   socket.on('makeGame', async (data) => {
     console.log(JSON.stringify(GameCollection));
+    console.log('userID', data.id)
 
     let noGamesFound = true;
 
@@ -128,33 +88,19 @@ io.on('connection', (socket) => {
       game.totalGameCount += 1;
       game.gameList.push(gameObject);
 
-      const saved = await GameHelper.saveGame({users: gameObject.users, questionIds: gameObject.questionIds});
+      const saved = await GameHelper.saveGame({users: gameObject.users, questionIds: gameObject.questionIds, identifier: gameObject.id});
       gameObject.savedGame = saved;
-
+      socket.broadcast.to(gameObject.id).emit(gameObject.id, gameObject);
       socket.broadcast.emit('gameCreated', gameObject);
     }
     console.log(JSON.stringify(GameCollection));
   });
 
-  socket.on('joinGame', (data) => {
-    console.log(`${data.name} wants to join a game`);
-    let alreadyInTheGame = false;
-
-    // eslint-disable-next-line array-callback-return
-    GameCollection.gameList.map((game, index) => {
-      if (game.playerOne === data.name || game.playerTwo === data.name) {
-        alreadyInTheGame = true;
-        console.log(`${data.name} already has a Game!`);
-
-        socket.emit('alreadyJoined', {
-          gameId: GameCollection.gameList[index].id
-        });
-      }
-    });
-
-    if (alreadyInTheGame === false) {
-      gameSeeker(data);
-    }
+  socket.on('joinRoom', async (game) =>{
+    const gamedb = await GameHelper.fetchGame('identifier', game.id);
+    await GameHelper.updateUsers(game.users, gamedb.id);
+    socket.join(game.id);
+    socket.broadcast.to(gamedb.identifier).emit('joinSuccess', gamedb);
   });
 });
 
