@@ -21,21 +21,22 @@ class List extends Component {
     })
   }
 
-  joinGameButtonHandler = () => {
+  joinGameButtonHandler = (game) => {
     const { history, joinGameHandler, users } = this.props;
+    game.users.push({userId: users[0].userID, score: 0})
+    joinGameHandler(game);
     // history.push('/landing');
-    joinGameHandler({ userID: users[0].id, name: users[0].name });
   }
 
   createGameButtonHandler = () => {
     const { history, createGameHandler, users } = this.props;
+    createGameHandler({ userID: users[0].userID, name: users[0].name });
     // history.push('/landing');
-    createGameHandler({ userID: users[0].id, name: users[0].name });
   }
 
   render() {
     const { game, gameList, users } = this.props;
-    const games = gameList.map((g, index) => <li key={index}><p>GameId : {g.id} with {g.users.length} participants <button onClick={this.joinGameHandler}>Join Game</button></p></li>);
+    const games = gameList.map((g, index) => <li key={index}><p>GameId : {g.id} with {g.users.length} participants <button onClick={() => this.joinGameButtonHandler(g)}>Join Game</button></p></li>);
     return (
 
       <div className="wrapper">

@@ -22,6 +22,7 @@ const dummyGame1 = {
     })
   ],
   questionIds: [1, 2, 3, 4, 5],
+  identifier: 'zxcvbnm',
   createdAt: new Date(),
   updatedAt: new Date()
 };

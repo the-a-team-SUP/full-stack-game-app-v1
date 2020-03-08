@@ -39,7 +39,7 @@ export const createGameHandler = (game) => {
 export const joinGameHandler = (game) => {
   const pathSocket = "http://127.0.0.1:4000";
   const socket = openSocket(pathSocket);
-  socket.emit('joinGame', game);
+  socket.emit('joinRoom', game);
   return (dispatch) => {
     dispatch(joinGame(game))
   }

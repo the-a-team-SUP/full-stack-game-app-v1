@@ -5,6 +5,9 @@ const gameDefinition = (sequelize, DataTypes) => {
     },
     questionIds: {
       type: DataTypes.ARRAY(DataTypes.INTEGER)
+    },
+    identifier: {
+      type: DataTypes.STRING
     }
   }, {});
 

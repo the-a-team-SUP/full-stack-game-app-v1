@@ -19,6 +19,17 @@ class GameHelper {
 
   /**
    * data.
+   * @param {string} users The attribute.
+   * @param {string} id The value.
+   * @returns {string} The data.
+  */
+  static async updateUsers(users, id) {
+    const updatedUsers = await Game.update({ users }, { where: { id } });
+    return updatedUsers;
+  }
+
+  /**
+   * data.
    * @param {string} attr The attribute.
    * @param {string} value The value.
    * @returns {string} The data.
@@ -28,12 +39,13 @@ class GameHelper {
       {
         users: game.users,
         questionIds: game.questionIds,
+        identifier: game.identifier,
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
         fields: [
-          'users', 'questionIds', 'createdAt', 'updatedAt'
+          'users', 'questionIds', 'identifier', 'createdAt', 'updatedAt'
         ]
       }
     );
