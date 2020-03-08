@@ -10,7 +10,7 @@ const createMySocketMiddleware = () => {
       });
     });
     return next => (action) => {
-if (action.type === "LOGIN_USER") {
+      if (action.type === "LOGIN_USER") {
         socket.emit("new_user_logged_in", action.newUser);
         return next(action);
       }

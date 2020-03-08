@@ -5,35 +5,13 @@ import { UPDATE_GAME } from './gameTypes';
 
 const inititalState = {
   loading: false,
-  selectedGame: {
-    joinedGame: 1,
-    users: [
-      {
-        userId: 1,
-        score: 11
-      },
-      {
-        userId: 2,
-        score: 12
-      },
-      {
-        userId: 3,
-        score: 13
-      },
-      {
-        userId: 4,
-        score: 14
-      },
-      {
-        userId: 5,
-        score: 15
-      }
-    ],
-  },
   gameList: [],
-  game:{},
+  game: {
+    id: 1,
+    users: []
+  },
   error: "",
-  isGameOpen: false
+  isGameOpen:false
 };
 
 const reducer = (state = inititalState, action) => {

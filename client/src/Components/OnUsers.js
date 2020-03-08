@@ -6,8 +6,9 @@ class OnUsers extends Component {
   fecthLoggedInUsers = () => {
     axios
       .get("http://localhost:4000/api/loggedinusers")
-      .then(res => {
-          console.log(res)
+      .then( res =>
+      {
+        console.log( res )
         this.props.addFetchedUsers(res.data.data);
       })
       .catch(err => {});

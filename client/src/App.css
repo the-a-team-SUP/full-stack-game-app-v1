@@ -101,27 +101,28 @@ body{
   grid-auto-rows: minmax(100px, auto);
 }
 .users img{
-  border-radius: 50%;
-  width: 70px;
- position: relative;
-top: -10px;
-float: left;
-background-repeat:no-repeat;
-  background-size:cover;
-}
+	border-radius: 50%;
+	width: 80px;
+   position: relative;
+  top: -10px;
+  float: left;
+  background-repeat:no-repeat;
+	background-size:cover;
+	height: 80px;
+  }
 .users p{
 	padding: 0px;
 	margin-left: 90px;
 	margin-top: 0px;
 }
 .userSide img{
-position: relative;
-bottom: -30px;
-  border-radius: 70%;
-  width: 150px;
-  background-repeat:no-repeat;
-  background-size:cover;
-}
+	position: relative;
+	bottom: -30px;
+	  border-radius: 70%;
+	  width: 150px;
+	  background-repeat:no-repeat;
+	  background-size:cover;
+	}
 .userSide p{
 padding: -40px;
 margin-top: 40px;
@@ -159,12 +160,13 @@ box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
   margin-left: 300px;
 }
 .scores img{
-  border-radius: 50%;
-  width: 70px;
-  position: relative;
-  top: -10px;
-  float: left;
-}
+	border-radius: 50%;
+	width: 70px;
+	position: relative;
+	top: -10px;
+	float: left;
+  height: 70px;
+  }
 .scores p{
 	padding: 0px;
 	margin-left: 90px;
