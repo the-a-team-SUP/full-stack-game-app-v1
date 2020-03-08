@@ -1,8 +1,11 @@
+/* eslint-disable require-jsdoc */
 import userHelper from "../helpers/userHelper";
 
 class UserController {
   static async login(req, res) {
-    const { name, email, picture, userID } = req.body;
+    const {
+      name, email, picture, userID
+    } = req.body;
     const exists = await userHelper.userExists(userID);
     let updated;
     if (exists) {
@@ -27,6 +30,27 @@ class UserController {
   static async getLoggedInUsers(req, res) {
     const users = await userHelper.findLoggedInUsers(true);
     res.status(200).json({ status: 200, data: users });
+  }
+
+
+  static async logout(req, res) {
+    let updated;
+    const { userID } = req.body;
+    const exists = await userHelper.userExists(userID);
+
+    if (exists.isLoggedIn === false) {
+      return res.status(200).json({ status: 200, message: 'Already logged out' });
+    }
+
+    if (exists) {
+      updated = await userHelper.login(userID, false);
+    }
+
+    if (updated) {
+      return res.status(200).json({ status: 200, message: 'successfully logged out' });
+    }
+
+    return res.status(400).json({ status: 400, message: 'Something wrong happen' });
   }
 }
 
