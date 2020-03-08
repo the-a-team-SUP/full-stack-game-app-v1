@@ -102,12 +102,13 @@ body{
 }
 .users img{
   border-radius: 50%;
-  width: 70px;
+  width: 80px;
  position: relative;
 top: -10px;
 float: left;
 background-repeat:no-repeat;
   background-size:cover;
+  height: 80px;
 }
 .users p{
 	padding: 0px;
@@ -164,6 +165,7 @@ box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
   position: relative;
   top: -10px;
   float: left;
+height: 70px;
 }
 .scores p{
 	padding: 0px;
