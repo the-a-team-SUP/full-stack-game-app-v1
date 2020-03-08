@@ -35,8 +35,8 @@ class List extends Component {
 
       <div className="wrapper">
         <div className="center-div">
-          <Logout history={this.props.history} />
           <div className="games">
+            <Logout history={this.props.history} />
             <h2>All available games</h2>
             <ul>
               {games}

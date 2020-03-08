@@ -31,7 +31,7 @@ const inititalState = {
   gameList: [],
   game:{},
   error: "",
-  isGameOpen: "done"
+  isGameOpen: false
 };
 
 const reducer = (state = inititalState, action) => {
