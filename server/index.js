@@ -100,6 +100,7 @@ io.on('connection', (socket) => {
     const gamedb = await GameHelper.fetchGame('identifier', game.id);
     await GameHelper.updateUsers(game.users, gamedb.id);
     socket.join(game.id);
+    socket.broadcast.emit('joinSuccess', game);
     socket.broadcast.to(gamedb.identifier).emit('joinSuccess', gamedb);
   });
 });

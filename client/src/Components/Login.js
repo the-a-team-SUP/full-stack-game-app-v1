@@ -4,9 +4,7 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 
 class FacebookAuth extends Component {
-    componentDidMount() {
-        if (this.props.loggedInUsers.length === 0) this.props.history.push("/");
-    };
+    
     loginBtnClicked = () => {
         console.log('login btn clicked');
     };

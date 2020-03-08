@@ -1,6 +1,11 @@
 import React, { Component } from "react";
 import openSocket from 'socket.io-client';
-import { createGameHandler, updateGameList, joinGameHandler } from '../redux';
+import {
+  createGameHandler,
+  updateGameList,
+  joinGameHandler,
+  addJoinedUser
+} from '../redux';
 import { connect } from "react-redux";
 import Logout from './Logout';
 import "../styles/List.scss";
@@ -11,13 +16,18 @@ class List extends Component {
   }
 
   componentDidMount() {
-    const { updateGameList } = this.props;
+    const { history, updateGameList, addJoinedUser } = this.props;
     const socket = openSocket("http://127.0.0.1:4000");
     socket.on('gameCreated', (game) => {
       updateGameList(game)
+      // history.push('/landing');
+    })
+    socket.on('joinSuccess', (game) => {
+      addJoinedUser(game)
+      // history.push('/landing');
     })
     socket.on('alreadyJoined', (game) => {
-      console.log(game);
+      console.log('You are already in the game',game);
     })
   }
 
@@ -25,17 +35,18 @@ class List extends Component {
     const { history, joinGameHandler, users } = this.props;
     game.users.push({userId: users[0].userID, score: 0})
     joinGameHandler(game);
-    // history.push('/landing');
   }
 
   createGameButtonHandler = () => {
     const { history, createGameHandler, users } = this.props;
     createGameHandler({ userID: users[0].userID, name: users[0].name });
-    // history.push('/landing');
   }
 
   render() {
-    const { game, gameList, users } = this.props;
+    const { history, gameList, users } = this.props;
+
+    if (!users[0]) history.push('/')
+
     const games = gameList.map((g, index) => <li key={index}><p>GameId : {g.id} with {g.users.length} participants <button onClick={() => this.joinGameButtonHandler(g)}>Join Game</button></p></li>);
     return (
 
@@ -69,7 +80,8 @@ const mapDispatchToProps = dispatch => {
   return {
     createGameHandler: (game) => dispatch(createGameHandler(game)),
     updateGameList: (game) => dispatch(updateGameList(game)),
-    joinGameHandler: (game) => dispatch(joinGameHandler(game))
+    joinGameHandler: (game) => dispatch(joinGameHandler(game)),
+    addJoinedUser: (game) => dispatch(addJoinedUser(game))
   }
 }
 
