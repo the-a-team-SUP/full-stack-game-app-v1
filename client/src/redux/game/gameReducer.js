@@ -1,4 +1,4 @@
-import { CREATE_GAME } from "./gameTypes";
+import { CREATE_GAME, ADD_JOINED_USER } from "./gameTypes";
 import { UPDATE_GAMELIST } from './gameTypes';
 import { JOIN_GAME } from './gameTypes';
 
@@ -50,12 +50,26 @@ const reducer = (state = inititalState, action) => {
         gameList: [...state.gameList, action.payload]
       };
 
-
     case JOIN_GAME:
       return {
         ...state,
         game: action.payload
       };
+
+    case ADD_JOINED_USER:
+      const updatedGameList = state.gameList.map(game => {
+        if (game.id === action.payload.id) {
+          game.users = action.payload.users
+        }
+        return game
+      })
+      console.log('Updated', updatedGameList)
+      return {
+        ...state,
+        gameList: updatedGameList,
+        game: action.payload
+      };
+
 
     default:
       return state;
