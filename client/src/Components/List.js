@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import openSocket from 'socket.io-client';
-import { createGameHandler, updateGameList } from '../redux';
+import { createGameHandler, updateGameList, joinGameHandler } from '../redux';
 import { connect } from "react-redux";
 import Logout from './Logout';
 import "../styles/List.scss";
@@ -14,12 +14,17 @@ class List extends Component {
     const { updateGameList } = this.props;
     const socket = openSocket("http://127.0.0.1:4000");
     socket.on('gameCreated', (game) => {
-      console.log(game);
       updateGameList(game)
     })
     socket.on('alreadyJoined', (game) => {
       console.log(game);
     })
+  }
+
+  joinGameButtonHandler = () => {
+    const { history, joinGameHandler, users } = this.props;
+    // history.push('/landing');
+    joinGameHandler({ userID: users[0].id, name: users[0].name });
   }
 
   createGameButtonHandler = () => {
@@ -30,7 +35,7 @@ class List extends Component {
 
   render() {
     const { game, gameList, users } = this.props;
-    const games = gameList.map((g, index) => <li key={index}><p>GameId : {g.id} with {g.users.length} participants <button>Join Game</button></p></li>);
+    const games = gameList.map((g, index) => <li key={index}><p>GameId : {g.id} with {g.users.length} participants <button onClick={this.joinGameHandler}>Join Game</button></p></li>);
     return (
 
       <div className="wrapper">
@@ -62,7 +67,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     createGameHandler: (game) => dispatch(createGameHandler(game)),
-    updateGameList: (game) => dispatch(updateGameList(game))
+    updateGameList: (game) => dispatch(updateGameList(game)),
+    joinGameHandler: (game) => dispatch(joinGameHandler(game))
   }
 }
 

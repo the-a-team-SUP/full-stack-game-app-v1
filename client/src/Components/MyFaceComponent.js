@@ -17,6 +17,7 @@ class MyFaceComponent extends Component {
                 userID,
                 authenticated: true
             });
+            this.props.history.push("/list")
         }
     };
     render(){
@@ -55,7 +56,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        addUserToStore: (user) => dispatch(postUser(user))
+        addUserToStore: (user) => dispatch({ type: 'LOGIN_USER', newUser: user })
     }
 };
 

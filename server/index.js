@@ -96,6 +96,7 @@ io.on('connection', (socket) => {
   // when the client  requests to make a Game
   socket.on('makeGame', async (data) => {
     console.log(JSON.stringify(GameCollection));
+    console.log('userID', data.id)
 
     let noGamesFound = true;
 
@@ -130,11 +131,16 @@ io.on('connection', (socket) => {
 
       const saved = await GameHelper.saveGame({users: gameObject.users, questionIds: gameObject.questionIds});
       gameObject.savedGame = saved;
-
+      socket.broadcast.to(gameObject.id).emit(gameObject.id, gameObject);
       socket.broadcast.emit('gameCreated', gameObject);
     }
     console.log(JSON.stringify(GameCollection));
   });
+
+  socket.on('joinRoom', (id) =>{
+    console.log(id);
+    socket.join(id);
+  })
 
   socket.on('joinGame', (data) => {
     console.log(`${data.name} wants to join a game`);
