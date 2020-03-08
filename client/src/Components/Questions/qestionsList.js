@@ -3,6 +3,12 @@ import { useSelector } from 'react-redux';
 import InputRadio from './inputRadio';
 
 const QuestionList = ({questions}) => {
+    console.log('======dfgdfgdfg========');
+    console.log(questions);
+    console.log('==============');
+    
+
+    // const questions = useSelector(state => state.question.questions);
     const questionList = questions.length ? (
         questions.map((question, index) => {
             return(
