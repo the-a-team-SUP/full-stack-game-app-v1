@@ -99,24 +99,10 @@ io.on('connection', (socket) => {
 
   socket.on('joinRoom', async (game) => {
     const gamedb = await GameHelper.fetchGame('identifier', game.id);
-  
-    gamedb.users.map((user, index) => {
-      if (user === game.users[0].userID) {
-        noGamesFound = false;
-        console.log("This User already has a Game!");
-
-        socket.emit('alreadyJoined', {
-          gameId: gamedb.gameList[index]
-        });
-      }
-    });
-
-    if(noGamesFound) {
-      await GameHelper.updateUsers(game.users, gamedb.id);
-      socket.join(game.id);
-      socket.broadcast.emit('joinSuccess', game);
-      socket.broadcast.to(gamedb.identifier).emit('joinSuccess', gamedb);
-    }
+    await GameHelper.updateUsers(game.users, gamedb.id);
+    socket.join(game.id);
+    socket.broadcast.emit('joinSuccess', game);
+    socket.broadcast.to(gamedb.identifier).emit('joinSuccess', gamedb);
   });
 });
 

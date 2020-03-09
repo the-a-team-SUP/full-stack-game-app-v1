@@ -22,20 +22,16 @@ class List extends Component {
     socket.on('gameCreated', (game) => {
       updateGameList(game)
       updateGame(game)
+      history.push('/landing')
     })
     socket.on('joinSuccess', (game) => {
       addJoinedUser(game)
+      history.push('/landing')
     })
+  
     socket.on('alreadyJoined', (game) => {
       console.log('You are already in the game',game);
     })
-  }
-
-  componentDidUpdate(prevProps) {
-    if(this.props.users[0].userID !== prevProps.users[0].userID) {
-      console.log('Prev', prevProps.users[0])
-      console.log('Prev', this.props.users[0])
-    }
   }
 
   componentWillUnmount() {

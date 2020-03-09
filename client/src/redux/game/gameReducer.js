@@ -70,7 +70,7 @@ const reducer = (state = inititalState, action) => {
         }
         return game
       })
-      console.log('Updated', updatedGameList)
+      
       return {
         ...state,
         gameList: updatedGameList,
