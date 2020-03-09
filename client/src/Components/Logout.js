@@ -5,18 +5,24 @@ import { connect } from 'react-redux';
 import "../App.css";
 
 class Logout extends Component {
-    // componentDidMount() {
-    //     if (this.props.loggedInUsers.length === 0) {
-    //         this.props.history.push("/");
-    //     }
-    // }
+    componentDidMount() {
+        const token = localStorage.getItem('token');
+        if (!token) this.props.history.push("/");
+    };
+
+    removeToken() {
+        const token = localStorage.removeItem('token');
+        return token;
+    }
     render() {
         return (
             <div>
                 <button className="btn"
                     onClick={(() => {
-                        if (this.props.loggedInUsers.length === 0) { this.props.history.push("/") } else {
+                        if (this.props.loggedInUsers.length !== 0) {
                             this.props.logoutThisUser(this.props.loggedInUsers[0].userID);
+                            this.removeToken();
+                            this.props.history.push("/");
                         }
                     })}
                 >

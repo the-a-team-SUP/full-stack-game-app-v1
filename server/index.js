@@ -1,12 +1,14 @@
 import dotenv from 'dotenv';
 import express from 'express';
 import serverSocket from 'socket.io';
+import passport from 'passport';
 import fs from 'fs';
 import path from 'path';
 import cors from 'cors';
 import GameCollection from './helpers/GameCollection';
 import GameHelper from './helpers/gameHelper';
 import QuestionHelper from './helpers/QuestionHelper';
+import "./middlewares/fbStrategy";
 import allRoutes from './routes';
 
 dotenv.config();
@@ -14,6 +16,7 @@ dotenv.config();
 const app = express();
 const basePath = '/api';
 
+app.use(passport.initialize());
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -48,15 +51,13 @@ io.on('connection', (socket) => {
 
   socket.on("new_user_logged_in", (userData) => {
     console.log(userData);
-    
     socket.broadcast.emit("logged_in_user", userData);
   });
 
   // when the client  requests to make a Game
   socket.on('makeGame', async (data) => {
     console.log(JSON.stringify(GameCollection));
-    console.log('userID', data.id)
-
+    console.log('userID', data.id);
     let noGamesFound = true;
 
     // eslint-disable-next-line array-callback-return
@@ -76,8 +77,8 @@ io.on('connection', (socket) => {
       const Qs = await QuestionHelper.fetchQuestions();
 
       gameObject.id = (Math.random() + 1).toString(36).slice(2, 18);
-      gameObject.users = [{userId: data.userID, score: 0}];
-      gameObject.questionIds = Qs.map(q => q.id);
+      gameObject.users = [{ userId: data.userID, score: 0 }];
+      gameObject.questionIds = Qs.map((q) => q.id);
       gameObject.open = false;
 
       console.log(gameObject);
@@ -88,7 +89,7 @@ io.on('connection', (socket) => {
       game.totalGameCount += 1;
       game.gameList.push(gameObject);
 
-      const saved = await GameHelper.saveGame({users: gameObject.users, questionIds: gameObject.questionIds, identifier: gameObject.id});
+      const saved = await GameHelper.saveGame({ users: gameObject.users, questionIds: gameObject.questionIds, identifier: gameObject.id });
       gameObject.savedGame = saved;
       socket.broadcast.to(gameObject.id).emit(gameObject.id, gameObject);
       socket.broadcast.emit('gameCreated', gameObject);
@@ -96,7 +97,7 @@ io.on('connection', (socket) => {
     console.log(JSON.stringify(GameCollection));
   });
 
-  socket.on('joinRoom', async (game) =>{
+  socket.on('joinRoom', async (game) => {
     const gamedb = await GameHelper.fetchGame('identifier', game.id);
     await GameHelper.updateUsers(game.users, gamedb.id);
     socket.join(game.id);

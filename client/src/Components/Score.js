@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import OnUsers from '../Components/OnUsers';
 import Logout from './Logout';
 import "../App.css";
 
@@ -8,18 +9,7 @@ class Score extends Component {
 			<div class="wrapper">
 				<div>
 					<h4>Online Users</h4>
-					<div class="users">
-						<img src="https://media.istockphoto.com/photos/businessman-silhouette-as-avatar-or-default-profile-picture-picture-id476085198?k=6&m=476085198&s=612x612&w=0&h=5cDQxXHFzgyz8qYeBQu2gCZq1_TN0z40e_8ayzne0X0="></img> <b><p>Doddy</p></b><p>kwizeradoddy@gmail.com</p>
-					</div>
-					<br></br>
-					<div class="users">
-						<img src="https://www.gelatovillage.co.uk/wp-content/uploads/2016/03/dark-chocolate-e1531660276646.jpg"></img> <b><p>Karen</p></b><p>kgiramata57@gmail.com</p>
-					</div>
-					<br></br>
-					<div class="users">
-						<img src="https://images-na.ssl-images-amazon.com/images/I/71EFb-BEAeL._AC_SL1400_.jpg"></img> <b><p>Igor</p></b><p>igor@gmail.com</p>
-					</div>
-					<br></br>
+					<OnUsers />
 				</div>
 				<div class="container">
 					<div class="userSide">
