@@ -2,6 +2,7 @@ import openSocket from 'socket.io-client';
 import { CREATE_GAME } from './gameTypes'
 import { JOIN_GAME } from './gameTypes'
 import { UPDATE_GAMELIST } from './gameTypes'
+import { UPDATE_GAME } from './gameTypes'
 import { ADD_JOINED_USER } from './gameTypes'
 
 export const createGame = (game) =>
@@ -24,6 +25,13 @@ export const addJoinedUser = (game) =>
 {
   return {
     type: ADD_JOINED_USER,
+    payload: game
+  }
+}
+export const updateGame = (game) =>
+{
+  return {
+    type: UPDATE_GAME,
     payload: game
   }
 }

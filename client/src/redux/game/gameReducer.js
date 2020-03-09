@@ -1,6 +1,7 @@
 import { CREATE_GAME, ADD_JOINED_USER } from "./gameTypes";
 import { UPDATE_GAMELIST } from './gameTypes';
 import { JOIN_GAME } from './gameTypes';
+import { UPDATE_GAME } from './gameTypes';
 
 const inititalState = {
   loading: false,
@@ -40,7 +41,6 @@ const reducer = (state = inititalState, action) => {
     case CREATE_GAME:
       return {
         ...state,
-        game: action.payload,
         isGameOpen: "pending"
       };
 
@@ -48,6 +48,13 @@ const reducer = (state = inititalState, action) => {
       return {
         ...state,
         gameList: [...state.gameList, action.payload]
+      };
+
+
+    case UPDATE_GAME:
+      return {
+        ...state,
+        game: action.payload
       };
 
     case JOIN_GAME:
