@@ -31,13 +31,7 @@ const reducer = (state = initialStatus, action) => {
     const unloggedOutUsers = state.loggedInUsers.filter(users => {
       return users.userID !== userToLogout;
     })
-    axios.post('api/facebooklogout', { userID: userToLogout })
-      .then((information) => {
-        if (information.data.status === 200) {
-          window.FB.logout(() => window.location.href = '/');
-        }
-      })
-      .catch(error => { console.log(error) });
+    axios.post('api/facebooklogout', { userID: userToLogout });
     return {
       ...state,
       loggedInUsers: unloggedOutUsers
