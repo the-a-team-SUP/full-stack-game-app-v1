@@ -3,6 +3,7 @@ import openSocket from 'socket.io-client';
 import {
   createGameHandler,
   updateGameList,
+  updateGame,
   joinGameHandler,
   addJoinedUser
 } from '../redux';
@@ -16,15 +17,32 @@ class List extends Component {
   }
 
   componentDidMount() {
-    const { history, updateGameList, addJoinedUser } = this.props;
+    const { history, updateGame, updateGameList, addJoinedUser } = this.props;
     const socket = openSocket("http://127.0.0.1:4000");
     socket.on('gameCreated', (game) => {
       updateGameList(game)
-      // history.push('/landing');
+      updateGame(game)
+      history.push('/landing')
     })
     socket.on('joinSuccess', (game) => {
       addJoinedUser(game)
-      // history.push('/landing');
+      history.push('/landing')
+    })
+  
+    socket.on('alreadyJoined', (game) => {
+      console.log('You are already in the game',game);
+    })
+  }
+
+  componentWillUnmount() {
+    const { updateGame, updateGameList, addJoinedUser } = this.props;
+    const socket = openSocket("http://127.0.0.1:4000");
+    socket.on('gameCreated', (game) => {
+      updateGameList(game)
+      updateGame(game)
+    })
+    socket.on('joinSuccess', (game) => {
+      addJoinedUser(game)
     })
     socket.on('alreadyJoined', (game) => {
       console.log('You are already in the game',game);
@@ -79,6 +97,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     createGameHandler: (game) => dispatch(createGameHandler(game)),
+    updateGame: (game) => dispatch(updateGame(game)),
     updateGameList: (game) => dispatch(updateGameList(game)),
     joinGameHandler: (game) => dispatch(joinGameHandler(game)),
     addJoinedUser: (game) => dispatch(addJoinedUser(game))
