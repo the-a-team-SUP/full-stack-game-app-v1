@@ -2,7 +2,8 @@ import { LOGIN_USER, LOGOUT_USER } from "./userTypes";
 
 const initialStatus = {
   loggedInUsers: [],
-  message: ' '
+  message: ' ',
+  onlineUsers: []
 };
 
 const reducer = (state = initialStatus, action) => {
@@ -19,12 +20,14 @@ const reducer = (state = initialStatus, action) => {
   } else if (action.type === "ADD_LOGGEDIN_USER_FROM_SOCKET") {
     return {
       ...state,
-      loggedInUsers: [...state.loggedInUsers, action.newUser]
+      loggedInUsers: [ ...state.loggedInUsers, action.newUser ],
+      onlineUsers: [...state.onlineUsers, action.newUser]
     };
   } else if (action.type === "ADD_FETCHED_USERS") {
     return {
       ...state,
-      loggedInUsers: [...state.loggedInUsers, ...action.users]
+      loggedInUsers: [ ...state.loggedInUsers, ...action.users ],
+      onlineUsers: [...state.onlineUsers, ...action.users]
     };
   } else if (action.type === LOGOUT_USER) {
     const userToLogout = action.user

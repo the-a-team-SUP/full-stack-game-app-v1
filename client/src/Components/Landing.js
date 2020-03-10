@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { fetchQuestionRequest } from '../redux';
 import QuestionList from '../Components/Questions/qestionsList';
 import OnUsers from './OnUsers'
+import ScoreList from '../Components/gameScore/scoresList';
 import Logout from './Logout';
 
 class Landing extends Component {
@@ -14,7 +15,21 @@ class Landing extends Component {
 
   render() {
     const { questions } = this.props.question;
-
+    const { users } = this.props.selectedGame;
+    const {onlineUsers }= this.props.onlineUsers;
+    const { isGameOpen } = this.props.isGameOpen;
+    let result;
+    if ( isGameOpen === "done"  )
+    { 
+      if(onlineUsers.length > 4){
+        result = <ScoreList scoreList={ users } usersList={ onlineUsers } />;
+      }
+    }
+ else
+    {
+      result= <QuestionList questions={ questions } />
+    }
+    
     return (
       <div className="wrapper">
         <div>
@@ -31,7 +46,7 @@ class Landing extends Component {
             <hr></hr>
             <h2>Game</h2>
             <div>
-              <QuestionList questions={questions} />
+            {result}
             </div>
           </div>
         </div>
@@ -47,7 +62,12 @@ const mapActionToProps = dispatch => {
 }
 
 const mapStateToProps = (state) => {
-  return { question: state.question }
+  return {
+    question: state.question,
+    selectedGame: state.game.game,
+    onlineUsers: state.user,
+    isGameOpen: state.game
+  }
 };
 
 export default connect(mapStateToProps, mapActionToProps)(Landing);
