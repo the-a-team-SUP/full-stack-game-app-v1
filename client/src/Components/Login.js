@@ -4,6 +4,7 @@ import qs from 'qs';
 import jwt from 'jsonwebtoken';
 
 class FacebookAuth extends Component {
+    state = { message: '' }
     addToStore = (token) => {
         try {
             const verified = jwt.verify(token, 'mysecretkey');
@@ -23,10 +24,13 @@ class FacebookAuth extends Component {
         }
     };
     loginBtnClicked = async () => {
+        localStorage.removeItem('message');
         console.log('login btn clicked');
     };
     componentDidMount = () => {
         const token = localStorage.getItem('token');
+        const message = localStorage.getItem('message');
+        this.setState({ message: message })
         if (token) {
             this.addToStore(token);
         } else {
@@ -55,7 +59,7 @@ class FacebookAuth extends Component {
                             <p>
                                 full-stack-game-app-v1 is a coolest game ever !! This is a coolest Multiple choice game or objective response is a form of an objective assessment in which respondents are asked to select only correct answers from the choices offered as a list. The multiple choice format is most frequently used in educational testing, in market research, and in elections, when a person chooses between multiple candidates or parties.
 						</p>
-                            <h3>{this.props.message}</h3>
+                            <h3>{this.state.message || this.props.message}</h3>
                             <a href='http://localhost:4000/api/auth/facebook'>
                                 <button className="button" onClick={this.loginBtnClicked}>Login With Facebook</button>
                             </a>
