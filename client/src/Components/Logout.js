@@ -1,5 +1,5 @@
 import { logoutUser } from '../redux/user/userActions';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Redirect } from 'react-router-dom';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import "../App.css";
@@ -17,7 +17,7 @@ class Logout extends Component {
                         if (this.props.loggedInUsers.length !== 0) {
                             this.props.logoutThisUser(this.props.loggedInUsers[0].userID);
                             this.removeToken();
-                            this.props.history.push("/");
+                            window.location.href='/';
                         }
                     })}
                 >
