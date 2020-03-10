@@ -1,8 +1,8 @@
 import { LOGIN_USER, LOGOUT_USER } from "./userTypes";
-import axios from 'axios';
 
 const initialStatus = {
-  loggedInUsers: []
+  loggedInUsers: [],
+  message: ' '
 };
 
 const reducer = (state = initialStatus, action) => {
@@ -31,10 +31,10 @@ const reducer = (state = initialStatus, action) => {
     const unloggedOutUsers = state.loggedInUsers.filter(users => {
       return users.userID !== userToLogout;
     })
-    axios.post('api/facebooklogout', { userID: userToLogout });
     return {
       ...state,
-      loggedInUsers: unloggedOutUsers
+      loggedInUsers: unloggedOutUsers,
+      message: action.serverData.data.message
     }
   }
   return state;
