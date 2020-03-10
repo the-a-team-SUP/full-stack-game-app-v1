@@ -15,6 +15,7 @@ export const logoutUser = (userID) => {
       user: userID,
       serverData: data
     })
+
   }).catch(error => dispatch({
     type: LOGOUT_USER,
     user: userID,

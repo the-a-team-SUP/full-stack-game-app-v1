@@ -17,7 +17,7 @@ class Logout extends Component {
                         if (this.props.loggedInUsers.length !== 0) {
                             this.props.logoutThisUser(this.props.loggedInUsers[0].userID);
                             this.removeToken();
-                            window.location.href='/';
+                            this.props.history.push("/")
                         }
                     })}
                 >

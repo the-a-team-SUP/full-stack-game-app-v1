@@ -32,6 +32,7 @@ const reducer = (state = initialStatus, action) => {
   } else if (action.type === LOGOUT_USER) {
     const userToLogout = action.user
     const unloggedOutUsers = state.loggedInUsers.filter(users => {
+      localStorage.setItem('message', action.serverData.data.message);
       return users.userID !== userToLogout;
     })
     return {
