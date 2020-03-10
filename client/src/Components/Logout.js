@@ -5,11 +5,6 @@ import { connect } from 'react-redux';
 import "../App.css";
 
 class Logout extends Component {
-    componentDidMount() {
-        const token = localStorage.getItem('token');
-        if (!token) this.props.history.push("/");
-    };
-
     removeToken() {
         const token = localStorage.removeItem('token');
         return token;

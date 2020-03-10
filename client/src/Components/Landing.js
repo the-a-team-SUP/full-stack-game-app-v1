@@ -7,6 +7,8 @@ import Logout from './Logout';
 
 class Landing extends Component {
   componentDidMount() {
+    const token = localStorage.getItem('token');
+    if (!token) this.props.history.push("/");
     this.props.getQuestions();
   }
 
