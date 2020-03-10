@@ -4,6 +4,12 @@ import Logout from './Logout';
 import "../App.css";
 
 class Score extends Component {
+	
+    componentDidMount() {
+        const token = localStorage.getItem('token');
+        if (!token) this.props.history.push("/");
+    };
+
 	render() {
 		return (
 			<div class="wrapper">
