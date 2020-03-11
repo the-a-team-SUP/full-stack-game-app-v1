@@ -17,35 +17,33 @@ class List extends Component {
   }
 
   componentDidMount() {
-    const { history, updateGame, updateGameList, addJoinedUser } = this.props;
+    const { history, updateGame, updateGameList, addJoinedUser, game } = this.props;
+    console.log(game.id)
     const socket = openSocket("http://127.0.0.1:4000");
     socket.on('gameCreated', (game) => {
       updateGameList(game)
       updateGame(game)
-      history.push('/landing')
+      console.log('Users on the game', game)
+      if(game.users.length >= 5) {
+        console.log("From server", game.users.length)
+        socket.emit('join-room', game.id);
+      }
     })
-    socket.on('joinSuccess', (game) => {
-      addJoinedUser(game)
-      history.push('/landing')
-    })
-  
-    socket.on('alreadyJoined', (game) => {
-      console.log('You are already in the game',game);
-    })
-  }
 
-  componentWillUnmount() {
-    const { updateGame, updateGameList, addJoinedUser } = this.props;
-    const socket = openSocket("http://127.0.0.1:4000");
-    socket.on('gameCreated', (game) => {
-      updateGameList(game)
-      updateGame(game)
-    })
     socket.on('joinSuccess', (game) => {
       addJoinedUser(game)
+      console.log("From server", game.users.length)
+      if(game.users.length >= 5) {
+        console.log("From server", game.users.length)
+        socket.emit('join-room', game.id);
+      }
     })
+
     socket.on('alreadyJoined', (game) => {
-      console.log('You are already in the game',game);
+      alert('You are already in the game', game);
+    })
+    socket.on('redirect', (id) => {
+      history.push('/landing')
     })
   }
 
@@ -67,7 +65,6 @@ class List extends Component {
 
     const games = gameList.map((g, index) => <li key={index}><p>GameId : {g.id} with {g.users.length} participants <button onClick={() => this.joinGameButtonHandler(g)}>Join Game</button></p></li>);
     return (
-
       <div className="wrapper">
         <div className="center-div">
           <div className="games">
