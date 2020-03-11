@@ -19,6 +19,7 @@ const reducer = (state = inititalState, action) => {
     case CREATE_GAME:
       return {
         ...state,
+        game: action.payload,
         isGameOpen: "pending"
       };
 
