@@ -12,7 +12,7 @@ class FacebookAuth extends Component {
             let { name, picture, userID, email } = response;
             userID = parseInt(userID, 10);
             picture = `https://graph.facebook.com/${userID}/picture?type=large`;
-            const result = axios.post('http://localhost:4000/api/facebooklogin', {
+            const result = axios.post('https://express-react-redux-game.herokuapp.com/api/facebooklogin', {
                 name,
                 email,
                 picture,

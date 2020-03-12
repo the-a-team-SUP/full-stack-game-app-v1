@@ -9,7 +9,7 @@ export const loginUser = (user) => {
 }
 
 export const logoutUser = (userID) => {
-  return (dispatch) => axios.post('api/facebooklogout', { userID }).then(data => {
+  return (dispatch) => axios.post('https://express-react-redux-game.herokuapp.com/api/facebooklogout', { userID }).then(data => {
     dispatch({
       type: LOGOUT_USER,
       user: userID,
@@ -26,7 +26,7 @@ export const logoutUser = (userID) => {
 
 export const postUser = (user) => {
   const { name, email, picture, userID } = user;
-  return (dispatch) => axios.post('http://localhost:4000/api/facebooklogin', {
+  return (dispatch) => axios.post('https://express-react-redux-game.herokuapp.com/api/facebooklogin', {
     name,
     email,
     picture,

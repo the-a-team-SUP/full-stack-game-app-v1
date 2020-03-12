@@ -9,6 +9,7 @@ import GameCollection from './helpers/GameCollection';
 import GameHelper from './helpers/gameHelper';
 import QuestionHelper from './helpers/QuestionHelper';
 import "./middlewares/fbStrategy";
+import socketHelper from './helpers/socketHelper';
 import allRoutes from './routes';
 
 dotenv.config();
@@ -21,12 +22,9 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use('/UI', express.static(path.join(__dirname, '../UI')));
+app.use('/', express.static(path.join(__dirname, '../client/build')));
 
 app.use(basePath, allRoutes);
-
-app.get('/', (req, res) => {
-  res.status(200).json({ message: 'Welcome to The Game' });
-});
 
 app.use((req, res) => {
   res.status(404).send({
@@ -134,7 +132,9 @@ io.sockets.on('connection', (socket) => {
 
   socket.on('join-room', (id) => {
     socket.broadcast.emit('redirect', id);
-  })
+  });
+
+  socketHelper.socketHelper(socket);
 });
 
 export { io };

@@ -1,9 +1,6 @@
 import openSocket from 'socket.io-client';
-import { CREATE_GAME } from './gameTypes'
-import { JOIN_GAME } from './gameTypes'
-import { UPDATE_GAMELIST } from './gameTypes'
-import { UPDATE_GAME } from './gameTypes'
-import { ADD_JOINED_USER } from './gameTypes'
+import { CREATE_GAME, UPDATE_GAMELIST, JOIN_GAME, UPDATE_GAME, ADD_JOINED_USER, UPDATE_GAME_SCORE, END_GAME, END_GAME_TO_ALL } from './gameTypes';
+import { socketToListen } from '../../Helpers/socket.ioHelper';
 
 export const createGame = (game) =>
 {
@@ -45,7 +42,7 @@ export const updateGameList = (game) =>
 }
 
 export const createGameHandler = (game) => {
-  const pathSocket = "http://127.0.0.1:4000";
+  const pathSocket = "https://express-react-redux-game.herokuapp.com/";
   const socket = openSocket(pathSocket);
   socket.emit('makeGame', game);
   return (dispatch) => {
@@ -54,10 +51,39 @@ export const createGameHandler = (game) => {
 }
 
 export const joinGameHandler = (game) => {
-  const pathSocket = "http://127.0.0.1:4000";
+  const pathSocket = "https://express-react-redux-game.herokuapp.com/";
   const socket = openSocket(pathSocket);
   socket.emit('joinRoom', game);
   return (dispatch) => {
     dispatch(joinGame(game))
+  }
+}
+
+export const updateGameScoreAction = (data) => {
+  return {
+    type: UPDATE_GAME_SCORE,
+    payload: data
+  }
+}
+
+export const endGame = () => {
+  return {
+    type: END_GAME,
+    payload: 'done'
+  }
+}
+
+export const endGameHandler = (gameResult) => {
+  const socket = openSocket(socketToListen);
+  socket.emit('clientEndGame', gameResult, () => {});
+  return (dispatch) => {
+    dispatch(endGame())
+  }
+}
+
+export const endGameToAll = (gameResult) => {
+  return {
+    type: END_GAME_TO_ALL,
+    payload: gameResult
   }
 }

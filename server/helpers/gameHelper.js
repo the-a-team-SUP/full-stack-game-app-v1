@@ -30,8 +30,7 @@ class GameHelper {
 
   /**
    * data.
-   * @param {string} attr The attribute.
-   * @param {string} value The value.
+   * @param {string} game The value.
    * @returns {string} The data.
   */
   static async saveGame(game) {
@@ -54,12 +53,12 @@ class GameHelper {
 
   /**
    * Update a game.
-   * @param {string} id The id of a game.
+   * @param {string} identifier The identifier of a game.
    * @param {string} gameData The game data.
    * @returns {object} The user's data about update password.
    */
-  static async updateGame(id, gameData) {
-    const updatedGame = await Game.update(gameData, { where: { id } });
+  static async updateGame(identifier, gameData) {
+    const updatedGame = await Game.update(gameData, { where: { identifier } });
     return updatedGame;
   }
 }

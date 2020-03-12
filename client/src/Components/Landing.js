@@ -1,35 +1,57 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
-import { fetchQuestionRequest } from '../redux';
+import openSocket from 'socket.io-client';
+import { socketToListen } from '../Helpers/socket.ioHelper';
+import { retrieveQuestionRequest } from '../redux';
 import QuestionList from '../Components/Questions/qestionsList';
 import OnUsers from './OnUsers'
 import ScoreList from '../Components/gameScore/scoresList';
 import Logout from './Logout';
+import UserHeader from './UserHeader/userHeader';
 
+let socket;
 class Landing extends Component {
   componentDidMount() {
     const token = localStorage.getItem('token');
     if (!token) this.props.history.push("/");
-    this.props.getQuestions();
+    
+    // socket = openSocket(socketToListen);
+    // socket.on('QuestionsFromServer', (questionArray) => {
+    //   console.log('==========questions array from server=============');
+    //   console.log(questionArray.questions);
+    //   console.log('=======================');
+    //   if(this.props.game.game.id === questionArray.gameId){
+    //     this.props.getQuestions(questionArray.questions);
+    //   }
+    // });
   }
 
   render() {
     const { questions } = this.props.question;
-    const { users } = this.props.selectedGame;
-    const {onlineUsers }= this.props.onlineUsers;
-    const { isGameOpen } = this.props.isGameOpen;
+    const { game, isGameOpen } = this.props.game;
+    const { loggedInUsers, onlineUsers } = this.props.users;
+    console.log('===========game player lenght==============');
+    console.log(game.users.length);
+    console.log('=========================');
+    const getArrayObject = (array, indexParam) => {
+      let userObject;
+      array.map((data, index) => {
+        if(index === indexParam) userObject = data;
+      })
+      return {...userObject};
+    }
+    const getAllUsers = [
+      ...onlineUsers,
+      loggedInUsers[0]
+    ]
     let result;
-    if ( isGameOpen === "done"  )
-    { 
-      if(onlineUsers.length > 4){
-        result = <ScoreList scoreList={ users } usersList={ onlineUsers } />;
-      }
-    }
- else
-    {
-      result= <QuestionList questions={ questions } />
-    }
-    
+    if (isGameOpen === "done")
+      result = <ScoreList scoreList={ game.users } usersList={ getAllUsers } />;
+    else if(game.users.length > 4)
+      result = <QuestionList questions={questions} myData={getArrayObject(loggedInUsers, 0)} />;
+    else
+      result = <p>Wait for 5 users, please.</p>;
+
     return (
       <div className="wrapper">
         <div>
@@ -38,13 +60,10 @@ class Landing extends Component {
           <br></br>
         </div>
         <div className="container">
-          <div class="userSide">
+          <div className="userSide">
             <Logout history={this.props.history} />
-            <img src="https://scontent.fkgl3-1.fna.fbcdn.net/v/t31.0-8/p960x960/18595201_1388101917942882_8338415819528657694_o.jpg?_nc_cat=111&_nc_sid=85a577&_nc_eui2=AeGHMCbPiqtJPHzN2POLLaN-oiKJ8uSwlDLn4DPz1WKGRfqzIQvLFiUHN4DZnLLPddENRgJSb9w9ePc13SEyXDG2mfruTR9H0mXN8r38Hxo_7A&_nc_ohc=4ILfuPtH8EkAX-V2rcm&_nc_pt=5&_nc_ht=scontent.fkgl3-1.fna&_nc_tp=6&oh=db0d3a586f50de626dd59959e22da0a1&oe=5E97FB61"></img>
-            <b><p>Guevara</p></b>
-            <p>manziguevara@gmail.com</p>
+            <UserHeader userData={getArrayObject(loggedInUsers, 0)} />
             <hr></hr>
-            <h2>Game</h2>
             <div>
             {result}
             </div>
@@ -55,19 +74,18 @@ class Landing extends Component {
   }
 }
 
-const mapActionToProps = dispatch => {
-  return {
-    getQuestions: () => dispatch(fetchQuestionRequest())
-  }
-}
-
 const mapStateToProps = (state) => {
   return {
     question: state.question,
-    selectedGame: state.game.game,
-    onlineUsers: state.user,
-    isGameOpen: state.game
+    users: state.user,
+    game: state.game
   }
 };
+
+const mapActionToProps = dispatch => {
+  return {
+    // getQuestions: (questionsArray) => dispatch(retrieveQuestionRequest(questionsArray))
+  }
+}
 
 export default connect(mapStateToProps, mapActionToProps)(Landing);

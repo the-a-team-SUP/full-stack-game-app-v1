@@ -20,14 +20,20 @@ const reducer = (state = initialStatus, action) => {
   } else if (action.type === "ADD_LOGGEDIN_USER_FROM_SOCKET") {
     return {
       ...state,
-      loggedInUsers: [ ...state.loggedInUsers, action.newUser ],
+      // loggedInUsers: [ ...state.loggedInUsers, action.newUser ],
       onlineUsers: [...state.onlineUsers, action.newUser]
     };
   } else if (action.type === "ADD_FETCHED_USERS") {
+    const otherUsers = action.users.filter((user) => {
+      console.log('>>>>>>>>>>>>');
+      console.log(user);
+      console.log('<<<<<<<<<<<<<<<<<<');
+      return user.userID !== state.loggedInUsers[0].userID.toString();
+    });
     return {
       ...state,
-      loggedInUsers: [ ...state.loggedInUsers, ...action.users ],
-      onlineUsers: [...state.onlineUsers, ...action.users]
+      // loggedInUsers: [ ...state.loggedInUsers, ...action.users ]
+      onlineUsers: [...otherUsers]
     };
   } else if (action.type === LOGOUT_USER) {
     const userToLogout = action.user
