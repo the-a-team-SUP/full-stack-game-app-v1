@@ -71,7 +71,7 @@ io.sockets.on('connection', (socket) => {
     //   })
     // }
 
-    setTimeout(async () => {
+    // setTimeout(async () => {
       if(noGamesFound) {
         const gameObject = {};
         const Qs = await QuestionHelper.fetchQuestions();
@@ -91,7 +91,7 @@ io.sockets.on('connection', (socket) => {
         socket.broadcast.emit('gameCreated', gameObject);
         console.log(gameObject)
       }
-    }, 1000);
+    // }, 1000);
     console.log(JSON.stringify(GameCollection));
   });
 
@@ -119,7 +119,7 @@ io.sockets.on('connection', (socket) => {
     //   });
     // }
 
-    setTimeout(async () => {
+    // setTimeout(async () => {
       if (noGamesFound) {
         const gamedb = await GameHelper.fetchGame('identifier', game.id);
         await GameHelper.updateUsers(game.users, gamedb.id);
@@ -127,7 +127,7 @@ io.sockets.on('connection', (socket) => {
         socket.join(gamedb.identifier);
         socket.broadcast.to(gamedb.identifier).emit('joinSuccess', gamedb);
       }
-    }, 1000)
+    // }, 1000)
   });
 
   socket.on('join-room', (id) => {
