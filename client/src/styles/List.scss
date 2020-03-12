@@ -1,0 +1,64 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: auto;
+
+  .center-div {
+    background-color: #f3f2ef;
+    border-radius: 5px;
+    width: 700px;
+
+    .games {
+      padding: 10px;
+
+      h2 {
+        text-align: center;
+      }
+
+      ul {
+        list-style-type: none;
+        margin: 0px 0px 0px -40px;
+        li {
+          background-color: white;
+          padding: 20px;
+          margin-bottom: 10px;
+
+          button {
+            float: right;
+            margin-right: 10px;
+            background-color: rgb(76, 91, 175); /* Blue */
+            border: none;
+            border-radius: 5px;
+            color: white;
+            padding: 10px 10px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: 550;
+            font-size: 16px;
+          }
+        }
+      }
+    }
+
+    .buttons {
+      text-align: center;
+      padding: 10px;
+      margin-bottom: 10px;
+      
+      button {
+        background-color: #4CAF50; /* Green */
+        border: none;
+        border-radius: 5px;
+        color: white;
+        padding: 10px 10px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-weight: 550;
+        font-size: 16px;
+      }
+    }
+  }
+}
