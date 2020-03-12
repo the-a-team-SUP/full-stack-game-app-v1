@@ -28,7 +28,6 @@ class FacebookAuth extends Component {
                 id: userID,
                 authenticated: true
             });
-            console.log(this.props.loggedInUsers);
         }
     };
     render(){

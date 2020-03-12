@@ -14,29 +14,14 @@ const QuestionList = ({ questions, myData }) => {
     socket = openSocket(socketToListen);
     useEffect(() => {
         socket.on('scoreFromServer', (scoreData) => {
-            console.log('======bofore -if- score from server=============')
-            console.log(scoreData)
-            console.log('========bofore -if- game-id===========')
-            console.log(game.id)
             if(game.id === scoreData.gameId){
-                console.log('======after -if- score from server=============')
-                console.log(scoreData)
-                console.log('========after -if- game-id===========')
-                console.log(game.id)
-                console.log('===================')
                 const newScores = updateScore(scoreData.userId, game.users);
-                console.log('=======after -if- new score to update============')
-                console.log(newScores)
-                console.log('===================')
                 dispatch(updateGameScoreAction(newScores));
             }
         });
 
         socket.on('serverEndGame', (gameResult) => {
             if(game.id === gameResult.id){
-                console.log('========serverEndGame data===========')
-                console.log(gameResult)
-                console.log('===================')
                 dispatch(endGameToAll(gameResult));
             }
         })

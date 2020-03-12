@@ -17,9 +17,6 @@ class Landing extends Component {
     
     // socket = openSocket(socketToListen);
     // socket.on('QuestionsFromServer', (questionArray) => {
-    //   console.log('==========questions array from server=============');
-    //   console.log(questionArray.questions);
-    //   console.log('=======================');
     //   if(this.props.game.game.id === questionArray.gameId){
     //     this.props.getQuestions(questionArray.questions);
     //   }
@@ -30,9 +27,6 @@ class Landing extends Component {
     const { questions } = this.props.question;
     const { game, isGameOpen } = this.props.game;
     const { loggedInUsers, onlineUsers } = this.props.users;
-    console.log('===========game player lenght==============');
-    console.log(game.users.length);
-    console.log('=========================');
     const getArrayObject = (array, indexParam) => {
       let userObject;
       array.map((data, index) => {
