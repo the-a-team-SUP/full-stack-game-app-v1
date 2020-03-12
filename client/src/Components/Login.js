@@ -35,11 +35,9 @@ class FacebookAuth extends Component {
             this.addToStore(token);
         } else {
             const incomingToken = qs.parse(window.location.search, { ignoreQueryPrefix: true }).token;
-            console.log(incomingToken);
             if (incomingToken) {
                 this.addToStore(incomingToken);
             } else {
-                console.log(`>>>>> no token was sent <<<<<`);
             }
         }
     };

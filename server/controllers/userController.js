@@ -22,7 +22,7 @@ class UserController {
       const token = jwt.sign({
         name, email, userID, picture
       }, process.env.SECRET_KEY);
-      return res.redirect(`https://localhost:3000/?token=${token}`);
+      return res.redirect(`https://express-react-redux-game.herokuapp.com/?token=${token}`);
     }
     return res.status(500).json({ status: 500, message: 'error logging in' });
   }

@@ -19,7 +19,6 @@ class List extends Component {
       .get("https://express-react-redux-game.herokuapp.com/api/loggedinusers")
       .then( res =>
       {
-        console.log( res )
         this.props.addFetchedUsers(res.data.data);
       })
       .catch(err => {});
@@ -31,40 +30,24 @@ class List extends Component {
   componentDidMount() {
     this.fecthLoggedInUsers()
     const { history, updateGame, updateGameList, addJoinedUser, game } = this.props;
-    console.log(game.id)
     const socket = openSocket("https://express-react-redux-game.herokuapp.com/");
     socket.on('gameCreated', (game) => {
       updateGameList(game)
       updateGame(game)
-      console.log('Users on the game', game)
       if(game.users.length >= 5) {
-        console.log("From server", game.users.length)
         socket.emit('join-room', game.id);
       }
     })
 
     socket.on('joinSuccess', (game) => {
       addJoinedUser(game)
-      console.log("From server", game.users.length)
       if(game.users.length >= 5) {
-        console.log("From server", game.users.length)
         socket.emit('join-room', game.id);
       }
     })
 
     socket.on('QuestionsFromServer', (questionArray) => {
-      console.log('==========questions array from server=============');
-      console.log(questionArray.questions);
-      console.log('===========game to check============');
-      console.log(this.props.gameToCheck);
-      console.log('===========game to check, check again the id============');
-      console.log(this.props.gameToCheck);
-      console.log('======', game.id, '===========', questionArray.gameId, '======');
       if(this.props.game.id === questionArray.gameId){
-        console.log('==========questions array from server [in condition]=============');
-        console.log('======', game.id, '===========', questionArray.gameId, '======');
-        console.log(questionArray.questions);
-        console.log('=======================');
         this.props.getQuestions(questionArray.questions);
       }
     });
@@ -79,13 +62,7 @@ class List extends Component {
 
   joinGameButtonHandler = (game) => {
     const { history, joinGameHandler, users, gameToCheck } = this.props;
-    game.users.push({userId: users[0].userID, score: 0})
-    console.log('=======joined game======');
-    console.log(game);
-    console.log('============');
-    console.log('=======plz game======');
-    console.log(gameToCheck);
-    console.log('=======plz game======');
+    game.users.push({userId: users[0].userID, score: 0});
     joinGameHandler(game);
   }
 

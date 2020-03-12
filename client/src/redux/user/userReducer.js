@@ -25,9 +25,6 @@ const reducer = (state = initialStatus, action) => {
     };
   } else if (action.type === "ADD_FETCHED_USERS") {
     const otherUsers = action.users.filter((user) => {
-      console.log('>>>>>>>>>>>>');
-      console.log(user);
-      console.log('<<<<<<<<<<<<<<<<<<');
       return user.userID !== state.loggedInUsers[0].userID.toString();
     });
     return {

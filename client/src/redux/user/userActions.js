@@ -32,7 +32,6 @@ export const postUser = (user) => {
     picture,
     userID
   }).then(response => {
-    console.log(response)
     dispatch(loginUser(user))
   }).catch(error => console.log(error))
 }

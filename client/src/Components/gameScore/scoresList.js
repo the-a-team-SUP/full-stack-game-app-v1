@@ -5,11 +5,6 @@ const ScoresList = ( { scoreList, usersList } ) => {
     const scores =  scoreList.sort((a, b) => (b.score - a.score));
     const scoreListHoler = scores.map(( data, index ) => {
         const userData = userExist(data.userId, usersList);
-        console.log('+++++++++++++');
-        console.log(usersList);
-        console.log(data.userId);
-        console.log(userData);
-        console.log('+++++++++++');
             return (
                 <div className="scores" key={ index }>
                     <br /><hr /><br />

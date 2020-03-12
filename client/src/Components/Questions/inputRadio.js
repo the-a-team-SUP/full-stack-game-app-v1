@@ -9,11 +9,6 @@ const InputRadio = ({questionId, choises, socket, selectedGame, myData}) => {
     const checkAnswer = (answer) => {
         if(answer){
             const newScores = updateScore(myData.userID, selectedGame.users);
-            console.log('=========answer==========')
-            console.log(answer)
-            console.log('=========corresct score to save==========')
-            console.log(newScores)
-            console.log('===================')
             dispatch(updateGameScoreAction(newScores))
             socket.emit('scoreFromClient', { userId: myData.userID, gameId: selectedGame.id });
         }
